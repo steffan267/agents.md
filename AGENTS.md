@@ -27,7 +27,23 @@ If you add or update dependencies remember to:
 * Co-locate component-specific styles in the same folder as the component when
   practical.
 
-## 4. Useful Commands Recap
+## 4. Feature State and Domain Transitions
+
+When implementing application behavior, keep state changes behind the feature or domain
+object that owns the invariant:
+
+* Prefer intent-revealing transition functions/methods (for example `submitOrder`,
+  `markComplete`, or `applySelection`) over directly assigning fields that already
+  have a domain transition. Components, route handlers, and API handlers should
+  coordinate input/output, persistence, and side effects instead of duplicating the
+  transition by mutating domain state themselves.
+* Preserve nested collection semantics explicitly. If a change replaces a child list
+  rather than patching individual items, make that replacement behavior obvious in the
+  owning state/domain object and cover it with a focused regression test.
+* Keep fixes incremental: update the narrow transition surface needed for the task
+  rather than broad refactors or new abstractions.
+
+## 5. Useful Commands Recap
 
 | Command            | Purpose                                            |
 | ------------------ | -------------------------------------------------- |
